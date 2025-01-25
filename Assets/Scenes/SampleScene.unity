@@ -1218,7 +1218,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 0}
-  weaponBubbleTypeThresholds: []
+  weaponBubbleTypeThresholds:
+  - minThreshold: 0
+    maxThreshold: 0.25
+    type: 0
+  - minThreshold: 0.25
+    maxThreshold: 0.5
+    type: 1
+  - minThreshold: 0.5
+    maxThreshold: 0.75
+    type: 2
+  - minThreshold: 0.75
+    maxThreshold: 1
+    type: 3
   boxCollider: {fileID: 0}
 --- !u!4 &1184790645
 Transform:
@@ -1490,7 +1502,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
+  m_AnchoredPosition: {x: -5.0000153, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1316307807

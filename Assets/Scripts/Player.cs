@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     public Health health;
     private PlayerMovement _playerMovement;
     private Bubbler _bubbler;
-    [SerializeField] List<WeaponBubbleTypeThreshold> weaponBubbleTypeThresholds;
+    [SerializeField] public List<WeaponBubbleTypeThreshold> weaponBubbleTypeThresholds;
     
     [SerializeField] private BoxCollider boxCollider;
 
