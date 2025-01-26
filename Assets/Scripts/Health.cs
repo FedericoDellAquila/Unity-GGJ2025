@@ -5,8 +5,8 @@ using UnityEngine.Serialization;
 
 public class Health : MonoBehaviour
 {
-    public int currentHealth = 100;
-    public int maxHealth = 100;
+    public int currentHealth = 5;
+    public int maxHealth = 5;
     public bool isDead;
     
     public UnityEvent onDamageReceived;
@@ -28,7 +28,7 @@ public class Health : MonoBehaviour
         if (isDead) 
             return;
         
-        currentHealth -= damage;
+        currentHealth -= 1;
         if (currentHealth <= 0)
         {
             isDead = true;

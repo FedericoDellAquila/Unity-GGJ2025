@@ -24,10 +24,16 @@ public class Bubble : MonoBehaviour
 
     private GameObject aimPlane;
 
+    private float time;
+    private Vector3 originalScale = new Vector3(0.2f, 0.2f, 1.0f);
+
     private void Awake()
     {
         _renderer = GetComponentInChildren<MeshRenderer>();
         aimPlane = GameObject.Find("AimPlane");
+
+        originalScale.x /= 50;
+        originalScale.y /= 50;
     }
 
     private void Start()
@@ -42,9 +48,15 @@ public class Bubble : MonoBehaviour
         yield return new WaitForSeconds(5.0f);
         Destroy(this.gameObject);
     }
+
+    [SerializeField] private float cap;
     
     private void Update()
     {
+        time += Time.deltaTime;
+        float normalized = Mathf.Clamp(time / cap, 0.0f, 1.0f);
+        this.transform.localScale = Vector3.Lerp(originalScale * 0.5f, originalScale, normalized);
+        
         Vector3 direction = (target.transform.position - this.transform.position).normalized;
         transform.Translate(direction * speed * Time.deltaTime);
 

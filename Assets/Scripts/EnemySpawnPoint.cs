@@ -12,7 +12,7 @@ public class EnemySpawnPoint : MonoBehaviour
 
         Bubble.BubbleType type = (Bubble.BubbleType)randomIndex;
         
-        GameObject go = Instantiate(enemyPrefabs, transform.position, Quaternion.identity);
+        GameObject go = Instantiate(enemyPrefabs, transform.position, Quaternion.identity, this.transform);
         Enemy enemy = go.GetComponent<Enemy>();
         enemy.type = type;
         

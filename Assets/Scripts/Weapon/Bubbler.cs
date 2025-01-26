@@ -21,7 +21,7 @@ public class Bubbler : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask) == false)
             return;
             
-        this.gameObject.transform.LookAt(hit.point);
+        //this.gameObject.transform.LookAt(hit.point);
         
         Quaternion rotation = Quaternion.LookRotation((hit.point - this.transform.position).normalized);
 

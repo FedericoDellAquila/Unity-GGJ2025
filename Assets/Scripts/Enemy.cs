@@ -24,8 +24,6 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (this.transform.position.z < playerCamera.transform.position.z)
-            Destroy(this.gameObject);
     }
 
     private void Annihilate()

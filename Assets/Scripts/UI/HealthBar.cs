@@ -1,25 +1,23 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Health playerHealth;
-    [SerializeField] private Slider healthBar;
+    [SerializeField] private GameObject[] hearts;
+    [SerializeField] private int counter;
 
     private void Awake()
     {
+        counter = hearts.Length;
         playerHealth.onDamageReceived.AddListener(DamageReceivedCallback);
-        playerHealth.onHealthRecovered.AddListener(HealthRecoveredCallback);
-    }
-
-    private void HealthRecoveredCallback()
-    {
-        healthBar.value = playerHealth.NormalizedHealth();
     }
 
     private void DamageReceivedCallback()
     {
-        healthBar.value = playerHealth.NormalizedHealth();
+        hearts[counter - 1].SetActive(false);
+        counter--;
     }
 }

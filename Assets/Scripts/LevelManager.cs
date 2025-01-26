@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float moduleUnitOffset = 4.0f;
     [SerializeField] private float spawnTimer = 5.0f;
     [SerializeField] private int initialModules = 5;
+    [SerializeField] private int minNumEnemy = 1;
+    [SerializeField] private int maxNumEnemy = 4;
     [SerializeField] private GameObject[] _modules;
     
     private int _lastSpawnedModuleIndex;
@@ -46,13 +48,21 @@ public class LevelManager : MonoBehaviour
         GameObject selectedModule = _modules[randomIndex];
         _lastSpawnedModuleIndex = randomIndex;
         GameObject newModule = Instantiate(selectedModule, nextModuleLocation, Quaternion.identity);
+
+        int randomNumEnemy = Random.Range(minNumEnemy, maxNumEnemy);
         
         EnemySpawnPoint[] EnemySpawnPoints = newModule.GetComponentsInChildren<EnemySpawnPoint>();
         foreach (EnemySpawnPoint spawnPoint in EnemySpawnPoints)
         {
+            if (randomNumEnemy == 0)
+                break;
+            
             float randomValue = Random.value;
             if (randomValue > 0.5f)
+            {
                 spawnPoint.SpawnEnemy();
+                randomNumEnemy--;
+            }
         }
         
         IncreaseModuleLocation();
