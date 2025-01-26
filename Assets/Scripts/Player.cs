@@ -70,9 +70,6 @@ public class Player : MonoBehaviour
             if (value >= typeThreshold.minThreshold && value <= typeThreshold.maxThreshold)
                 type = typeThreshold.type;
         }
-        
-        Debug.Log("type: " + type);
-
         return type;
     }
 }

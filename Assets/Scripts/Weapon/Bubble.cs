@@ -18,7 +18,7 @@ public class Bubble : MonoBehaviour
 
     public LayerMask layerMask;
     
-    private SpriteRenderer _renderer;
+    private MeshRenderer _renderer;
 
     public GameObject target;
 
@@ -26,13 +26,13 @@ public class Bubble : MonoBehaviour
 
     private void Awake()
     {
-        _renderer = GetComponentInChildren<SpriteRenderer>();
+        _renderer = GetComponentInChildren<MeshRenderer>();
         aimPlane = GameObject.Find("AimPlane");
     }
 
     private void Start()
     {
-        _renderer.color = _colorData.GetColor(type);
+        _renderer.material.color = _colorData.GetColor(type);
         
         StartCoroutine(DestroyTimer());
     }

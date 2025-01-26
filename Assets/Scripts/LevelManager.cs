@@ -45,7 +45,16 @@ public class LevelManager : MonoBehaviour
 
         GameObject selectedModule = _modules[randomIndex];
         _lastSpawnedModuleIndex = randomIndex;
-        Instantiate(selectedModule, nextModuleLocation, Quaternion.identity);
+        GameObject newModule = Instantiate(selectedModule, nextModuleLocation, Quaternion.identity);
+        
+        EnemySpawnPoint[] EnemySpawnPoints = newModule.GetComponentsInChildren<EnemySpawnPoint>();
+        foreach (EnemySpawnPoint spawnPoint in EnemySpawnPoints)
+        {
+            float randomValue = Random.value;
+            if (randomValue > 0.5f)
+                spawnPoint.SpawnEnemy();
+        }
+        
         IncreaseModuleLocation();
     }
 

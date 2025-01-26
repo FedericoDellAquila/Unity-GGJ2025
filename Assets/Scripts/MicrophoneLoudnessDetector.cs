@@ -15,7 +15,7 @@ public class MicrophoneLoudnessDetector : MonoBehaviour
 
     public int bufferSize = 8;
 
-    public Queue<float> buffer;
+    public Queue<float> buffer = new Queue<float>();
     public float average;
     
     private AudioClip microphoneClip;

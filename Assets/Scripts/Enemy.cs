@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,15 +9,23 @@ public class Enemy : MonoBehaviour
     public Bubble.BubbleType type;
     private Health _health;
 
-    public Enemy(Bubble.BubbleType type)
-    {
-        
-    }
+    private Rigidbody _rigidbody;
+
+    private Camera playerCamera;
     
+   
     private void Awake()
     {
+        _rigidbody = GetComponent<Rigidbody>();
         _health = GetComponent<Health>();
         _health.onDeath.AddListener(Annihilate);
+        playerCamera = Camera.main;
+    }
+
+    private void Update()
+    {
+        if (this.transform.position.z < playerCamera.transform.position.z)
+            Destroy(this.gameObject);
     }
 
     private void Annihilate()
@@ -26,12 +36,37 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject);
-        
         Bubble bubble = other.gameObject.GetComponent<Bubble>();
-        if (bubble && bubble.type == type)
+        if (bubble)
         {
-            _health.ApplyDamage(34);
+            if (bubble.type == type)
+            {
+                _rigidbody.useGravity = true;
+                StartCoroutine(DestroyTimer());
+            }
+            
+            Destroy(other.gameObject);
         }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        Bubble bubble = other.gameObject.GetComponent<Bubble>();
+        if (bubble)
+        {
+            if (bubble.type == type)
+            {
+                _rigidbody.useGravity = true;
+                StartCoroutine(DestroyTimer());
+            }
+            
+            Destroy(other.gameObject);
+        }
+    }
+    
+    private IEnumerator DestroyTimer()
+    {
+        yield return new WaitForSeconds(1.0f);
+        Destroy(this.gameObject);
     }
 }
