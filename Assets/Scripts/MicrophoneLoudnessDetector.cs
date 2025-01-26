@@ -68,7 +68,7 @@ public class MicrophoneLoudnessDetector : MonoBehaviour
             
             average /= buffer.Count;
 
-            loudness = (average / maxLoudness) * multiplier;
+            loudness = Mathf.Clamp((average / maxLoudness) * multiplier, 0.0f, 1.0f);
         }
     }
 
