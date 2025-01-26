@@ -5,16 +5,12 @@ using UnityEngine.UI;
 
 public class BubbleColorBar : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-
-    private MicrophoneLoudnessDetector microphoneLoudnessDetector = null;
+    [SerializeField] private MicrophoneLoudnessDetector microphoneLoudnessDetector;
 
     private List<Slider> quartersSliders = new List<Slider>();
 
     void Start()
     {
-        microphoneLoudnessDetector = player.GetComponent<MicrophoneLoudnessDetector>();
-
         foreach (Transform child in transform)
         {
             Slider slider = child.GetComponent<Slider>();
