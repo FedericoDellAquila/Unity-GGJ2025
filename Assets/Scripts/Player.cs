@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     
     public Health health;
     private PlayerMovement _playerMovement;
-    private Bubbler _bubbler;
+    [SerializeField] private Bubbler _bubbler;
     [SerializeField] public List<WeaponBubbleTypeThreshold> weaponBubbleTypeThresholds;
     
     [SerializeField] private BoxCollider boxCollider;
@@ -35,7 +35,6 @@ public class Player : MonoBehaviour
         health = GetComponent<Health>();
         _rigidbody = GetComponent<Rigidbody>();
         _playerMovement = GetComponent<PlayerMovement>();
-        _bubbler = GetComponent<Bubbler>();
     }
 
     private void Update()

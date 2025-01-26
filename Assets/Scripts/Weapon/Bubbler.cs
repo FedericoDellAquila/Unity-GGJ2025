@@ -1,17 +1,49 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bubbler : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> bubbles = new List<GameObject>();
+    [SerializeField] private ColorData _colorData;
+    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private GameObject bubbles;
+    [SerializeField] private GameObject targetObject;
+
+    private Ray debugRay;
     
     public void SpawnBubble(Bubble.BubbleType type)
     {
-        GameObject go = bubbles.Find((GameObject g) => g.GetComponent<Bubble>().type == type);
-        GameObject bubble = Instantiate(go, this.transform.position, this.transform.rotation);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        debugRay = ray;
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask) == false)
+            return;
+            
+        this.gameObject.transform.LookAt(hit.point);
+        
+        Quaternion rotation = Quaternion.LookRotation((hit.point - this.transform.position).normalized);
 
-        Quaternion rotation = Quaternion.LookRotation(this.transform.forward, this.transform.up);
-        bubble.transform.rotation = rotation;
+        InstantiateParameters parameters = new InstantiateParameters();
+        parameters.worldSpace = true;
+        parameters.parent = hit.collider.transform;
+        
+        GameObject target = Instantiate(targetObject, hit.point, Quaternion.identity, parameters);
+        GameObject bubble = Instantiate(bubbles, this.transform.position, Quaternion.identity, hit.collider.transform);
+
+        Vector3 scale;
+        scale.x = bubble.transform.localScale.x / hit.collider.transform.localScale.x;
+        scale.y = bubble.transform.localScale.y / hit.collider.transform.localScale.y;
+        scale.z = bubble.transform.localScale.z / hit.collider.transform.localScale.z;
+
+        bubble.transform.localScale = scale;
+        bubble.GetComponent<Bubble>().target = target;
+        bubble.GetComponent<Bubble>().type = type;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Debug.DrawRay(debugRay.origin, debugRay.direction, Color.red);
     }
 }
