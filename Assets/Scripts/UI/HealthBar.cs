@@ -5,19 +5,17 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Health playerHealth;
     [SerializeField] private GameObject[] hearts;
-    [SerializeField] private int counter;
+    private int _counter;
 
     private void Awake()
     {
-        counter = hearts.Length;
-        playerHealth.onDamageReceived.AddListener(DamageReceivedCallback);
+        _counter = hearts.Length - 1;
     }
 
-    private void DamageReceivedCallback()
+    public void DamageReceived()
     {
-        hearts[counter - 1].SetActive(false);
-        counter--;
+        hearts[_counter].SetActive(false);
+        _counter--;
     }
 }

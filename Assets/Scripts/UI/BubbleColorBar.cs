@@ -13,10 +13,9 @@ public class BubbleColorBar : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            Slider slider = child.GetComponent<Slider>();
-            if (slider != null)
+            if (child.TryGetComponent<Slider>(out Slider sliderComponent))
             {
-                quartersSliders.Add(slider);
+                quartersSliders.Add(sliderComponent);
             }
         }
     }
@@ -28,24 +27,24 @@ public class BubbleColorBar : MonoBehaviour
             // Debug.LogError("MicrophoneLoudnessDetector is null");
             return;
         }
-        float value = microphoneLoudnessDetector.loudness;
+        float loudnessValue = microphoneLoudnessDetector.loudness;
 
-        if (value > 1f)
+        if (loudnessValue > 1f)
         {
-            value = 1f;
+            loudnessValue = 1f;
         }
 
-        value *= 4f;
+        loudnessValue *= 4f;
         foreach (Slider slider in quartersSliders)
         {
-            if (value > 1f)
+            if (loudnessValue > 1f)
             {
                 slider.value = 1f;
-                value -= 1f;
+                loudnessValue -= 1f;
                 continue;
             }
-            slider.value = value;
-            value = 0f;
+            slider.value = loudnessValue;
+            loudnessValue = 0f;
         }
     }
 }
